@@ -1,0 +1,32 @@
+package page;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import Base.ProjectCommonMethods;
+
+public class LoginPage extends ProjectCommonMethods
+{
+	public LoginPage(ChromeDriver driver)
+	{
+		this.driver=driver;
+	}
+  public  LoginPage enterUserName()
+  {
+	  driver.findElement(By.id("username")).sendKeys("DemoSalesManager");
+	  return this;
+  }
+  public LoginPage enterPassWord()
+  {
+	  driver.findElement(By.id("password")).sendKeys("crmsfa");
+	  return this;
+  }
+  public HomePage clickLogin()
+  {
+	  driver.findElement(By.className("decorativeSubmit")).click();
+	 /* HomePage hp=new HomePage();
+	  return hp;
+	  (or)*/
+	  return new HomePage(driver);
+  }
+}
