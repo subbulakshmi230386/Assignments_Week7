@@ -1,0 +1,33 @@
+package testcases;
+
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import Base.ProjectCommonMethods;
+
+import page.LoginPage;
+
+
+
+public class LoginLogut extends ProjectCommonMethods
+{
+	@BeforeTest
+	public void setFileName()
+	{
+		excelFileName = "createLead";
+	}
+	
+	@Test(dataProvider = "fetchdata")
+	public void LoginLogout(String cname, String fname, String lname)
+	{
+	   
+		new LoginPage(driver).enterUserName().enterPassWord().clickLogin()
+		.clickcrmSfa().clickLead().clickcreateLead().
+		entercompanyName(cname)
+		.enterfirstName(fname).enterlastName(lname)
+		.clicksubmit().verifyFirstName();
+		
+				
+	}
+
+}
