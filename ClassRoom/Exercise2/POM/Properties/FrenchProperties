@@ -1,0 +1,18 @@
+#key-value
+url=http://leaftaps.com/opentaps
+username=DemoCSR
+password=crmsfa
+
+#PageName.ElementName.LocatorName= LocatorValue
+#LoginPage
+LoginPage.username.Id=username
+LoginPage.password.Id=password
+LoginPage.LoginButton.ClassName=decorativeSubmit
+
+#HomePage
+HomePage.Crmsfa.LinkText=CRM/SFA
+
+#MyHomePage
+MyHomePage.Leads.LinkText=Leads
+
+
