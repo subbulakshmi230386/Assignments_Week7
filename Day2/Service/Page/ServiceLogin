@@ -1,0 +1,38 @@
+package page;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import base.SeviceCommonMethods;
+
+
+	public class ServiceLogin extends SeviceCommonMethods
+	{
+		
+		public ServiceLogin(ChromeDriver driver)
+		{
+			this.driver=driver;
+			
+		}
+		
+	  public  ServiceLogin enterUserName()
+	  {
+		  WebElement movlogframe=driver.findElement(By.xpath("//iframe[@id='gsft_main']"));
+			driver.switchTo().frame(movlogframe);
+		  driver.findElement(By.id("user_name")).sendKeys("admin");
+		  return this;
+	  }
+	  public ServiceLogin enterPassWord()
+	  {
+		  driver.findElement(By.id("user_password")).sendKeys("India@123");
+		  return this;
+	  }
+	  public NewIncident clickLogin()
+	  {
+		  driver.findElement(By.id("sysverb_login")).click();
+		
+		  return new NewIncident(driver);
+	  }
+
+}
