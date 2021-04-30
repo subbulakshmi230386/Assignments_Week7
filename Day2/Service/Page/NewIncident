@@ -89,5 +89,5 @@ public class NewIncident extends SeviceCommonMethods
 	    
 	    
 		return this;
-	}
+	
 	}
