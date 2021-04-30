@@ -1,0 +1,93 @@
+package page;
+
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
+
+import base.SeviceCommonMethods;
+
+public class NewIncident extends SeviceCommonMethods 
+{  
+	public String incinum="";
+	
+	public NewIncident(ChromeDriver driver)
+	{
+		this.driver=driver;
+	}
+	public NewIncident Incident()
+	{
+		 driver.findElement(By.name("filter")).sendKeys("Incidents",Keys.ENTER);
+		 driver.findElement(By.xpath("//div[text()='Incidents']")).click();
+		 WebElement movnewframe =driver.findElement(By.xpath("//iframe[@id='gsft_main']"));
+		 driver.switchTo().frame(movnewframe);
+		 driver.findElement(By.xpath("//*[@id='sysverb_new']")).click();		 	
+		 return this;
+	}
+	public NewIncident MandatoryFileds() throws InterruptedException
+	{
+		
+		incinum = driver.findElement(By.id("incident.number")).getAttribute("value");		
+		System.out.println("The incident number : "+incinum);
+		   Actions action=new Actions(driver);
+	 		
+	 		WebElement description=driver.findElement(By.xpath("//span[@class='icon icon-lightbulb']"));
+	 		 action.click(description).perform();
+	 		Set<String> allwindow=driver.getWindowHandles();
+	 		List<String>window=new ArrayList<String>(allwindow);
+	 		 allwindow=driver.getWindowHandles();
+	 		window=new ArrayList<String>(allwindow);
+	 		driver.switchTo().window(window.get(1));	 		
+	 		driver.findElement(By.linkText("Issue with a web page")).click();
+	 	  
+	 	    Thread.sleep(2000);
+	 	    allwindow=driver.getWindowHandles();
+			window=new ArrayList<String>(allwindow);
+			driver.switchTo().window(window.get(0));
+			WebElement movesubmitframe =driver.findElement(By.xpath("//iframe[@id='gsft_main']"));
+			driver.switchTo().frame(movesubmitframe);	
+			driver.findElement(By.id("sysverb_insert_bottom")).click();
+		return this;
+	}
+	public NewIncident Verify() throws InterruptedException
+	{
+		WebElement searchnum= driver.findElement(By.xpath("//span[@class='input-group-addon input-group-select']//select[1]")); 
+		Select sIndex=new Select(searchnum);
+		sIndex.selectByVisibleText("for text");	
+		System.out.println("The incident number of verify: "+incinum);	   
+		 
+		driver.findElement(By.xpath("//span[text()='Press Enter from within the input to submit the search.']/following-sibling::input")).sendKeys(incinum,Keys.ENTER); 
+		try
+	     {
+	    	 Thread.sleep(3000);
+			 driver.findElement(By.xpath("(//a[@class='breadcrumb_link']//b)[3]")).click();
+	     }
+	    catch(NoSuchElementException e)
+	    {
+	    	
+	    }
+		Thread.sleep(4000);
+				WebElement incident= driver.findElement(By.xpath("//*[@aria-label='Open record: "+incinum+"']"));
+				
+				String verifyincident=incident.getText();				
+				boolean verify=driver.findElement(By.xpath("//*[@aria-label='Open record: "+incinum+"']")).isDisplayed();
+				if(verify==true)
+				{
+					if(verifyincident.equals(incinum))					
+					  System.out.println("The Incident Number is created successfully");
+					else
+					  System.out.print("Not Successfully");	
+				
+			}  
+	    
+	    
+		return this;
+	}
+	}
